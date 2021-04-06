@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package lab03;
 
 import java.awt.*;  
 import java.awt.event.*;  
-/*********************************************/  
+
   
 public class Bai11 extends Frame  
 {  
@@ -160,8 +156,8 @@ if(cl.setClear)
             {cl.displayLabel.setText(""+index);cl.setClear=false;}  
 else  
     cl.displayLabel.setText(cl.displayLabel.getText()+index);  
-}//actionPerformed  
-}//class defination  
+} 
+} 
   
 /********************************************/  
   
