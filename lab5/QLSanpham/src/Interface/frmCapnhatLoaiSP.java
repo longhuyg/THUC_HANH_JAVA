@@ -102,13 +102,28 @@ public class frmCapnhatLoaiSP extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btLuu.setText("Lưu");
+        btLuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btLuuMouseClicked(evt);
+            }
+        });
 
         btKLuu.setText("K.Lưu");
+        btKLuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btKLuuMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("DANH MỤC LOẠI SẢN PHẨM");
 
         btThoat.setText("Thoát");
+        btThoat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btThoatMouseClicked(evt);
+            }
+        });
 
         jLabel2.setText("Mã Loại:");
 
@@ -141,6 +156,11 @@ public class frmCapnhatLoaiSP extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         btThem.setText("Thêm");
+        btThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btThemMouseClicked(evt);
+            }
+        });
         btThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btThemActionPerformed(evt);
@@ -148,6 +168,11 @@ public class frmCapnhatLoaiSP extends javax.swing.JFrame {
         });
 
         btXoa.setText("xóa");
+        btXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btXoaMouseClicked(evt);
+            }
+        });
 
         btSua.setText("Sửa");
 
@@ -241,6 +266,86 @@ public class frmCapnhatLoaiSP extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btThemMouseClicked
+       setNull();//Xoa trang TextField 
+        setKhoa(false);//Mo khoa TextField 
+        setButton(false);//Goi ham khoa cac Button 
+        cothem=true;//Gan cothem = true de ghi nhan trang thai them moi 
+    }                                    
+    private void btSuaMouseClicked(java.awt.event.MouseEvent evt) {                                    
+        String ml=txtMaloai.getText(); 
+        if(ml.length()==0) //Chua chon Ma loai              
+                JOptionPane.showMessageDialog(null,"Vui long chon loi can sua", "Thong bao",1); 
+         else 
+        { 
+            setKhoa(false);//Mo khoa cac TextField 
+            this.txtMaloai.enable(false); 
+            setButton(false); //Khoa cac Button 
+            cothem=false; //Gan cothem=false de ghi nhan trang thai la sua 
+        } 
+    }//GEN-LAST:event_btThemMouseClicked
+
+    private void btThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btThoatMouseClicked
+       this.dispose(); 
+    }//GEN-LAST:event_btThoatMouseClicked
+
+    private void btXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btXoaMouseClicked
+         String ml=txtMaloai.getText(); 
+        try { 
+            if(ml.length()==0)              
+                JOptionPane.showMessageDialog(null,"Chon 1 loai SP de xoa", 
+"Thong bao",1); 
+            else 
+            { 
+                if(JOptionPane.showConfirmDialog(null, "Ban muon xoa loai " + ml + "ong?","Thong bao",2)==0) 
+                {     
+                    lsp.DeleteData(ml);//goi ham xoa du lieu theo ma loai 
+                    ClearData();//Xoa du lieu trong tableModel 
+                    ShowData();//Do du lieu vao table Model 
+                    setNull();//Xoa trang Textfield 
+                } 
+             } 
+        }  
+        catch (SQLException ex) { 
+            JOptionPane.showMessageDialog(null,"Xóa thất bại","Thong bao",1); 
+        } 
+    }//GEN-LAST:event_btXoaMouseClicked
+
+    private void btLuuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btLuuMouseClicked
+        String ml=txtMaloai.getText(); 
+        String tl=txtTenloai.getText(); 
+         if(ml.length()==0 || tl.length()==0)              
+                JOptionPane.showMessageDialog(null, 
+"Vui long nhap Ma loai va ten loai","Thong bao",1); 
+         else 
+            if(ml.length()>2 || tl.length()>30)              
+                JOptionPane.showMessageDialog(null, 
+"Ma loai chi 2 ky tu, ten loai la 20","Thong bao",1); 
+            else    
+            { 
+              try { 
+                if(cothem==true)    //Luu cho tthem moi            
+                    lsp.InsertData(ml, tl); 
+                else                //Luu cho sua 
+                    lsp.EditData(ml, tl); 
+                ClearData(); //goi ham xoa du lieu tron tableModel 
+                ShowData(); //Do lai du lieu vao Table Model 
+              } 
+              catch (SQLException ex) { 
+                   JOptionPane.showMessageDialog(null,"Cap nhat that bai", 
+"Thong bao",1); 
+              }             
+             setKhoa(false); 
+             setButton(true); 
+         } 
+    }//GEN-LAST:event_btLuuMouseClicked
+
+    private void btKLuuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btKLuuMouseClicked
+        setNull(); 
+        setKhoa(true); 
+        setButton(true); 
+    }//GEN-LAST:event_btKLuuMouseClicked
 
     public static void main(String args[]) throws SQLException {
 
